@@ -63,7 +63,7 @@ switchbotWHAccessory.prototype.getServices = function() {
 
 //------------------------------------------------------------------------------
 switchbotWHAccessory.prototype.setState = function(powerOn, callback) {
-  if      (this.type == 'button' && powerOn) {
+  if      (this.type == 'button') {
     this.log('SET1： ' + powerOn);
     exec(powerOn ? this.onCommand : this.offCommand, function (error, stdout, stderr) {
       if (stdout) {console.log(stdout); }
@@ -71,12 +71,12 @@ switchbotWHAccessory.prototype.setState = function(powerOn, callback) {
     });
   }
 
-  else if (this.type == 'button' && !powerOn) {
-    setTimeout(function() {
-      this.switchService.setCharacteristic(Characteristic.On, false);
-    }.bind(this), 3000);
-    this.log('SET2： ' + powerOn);
-  }
+//  else if (this.type == 'button' && !powerOn) {
+//    setTimeout(function() {
+//      this.switchService.setCharacteristic(Characteristic.On, false);
+//    }.bind(this), 3000);
+//    this.log('SET2： ' + powerOn);
+//  }
 
   else if (this.type == 'switch') {
     this.log('SET1： ' + powerOn);
