@@ -8,19 +8,6 @@ module.exports = function(homebridge) {
 }
 
 //------------------------------------------------------------------------------
-function wait(test, callback) {
-    let count = 0;
-    let process = function() {
-      count++;
-      consorl.log(count);
-      if (test()) {
-        clearInterval(timer);
-        callback();
-      }
-    };
-    let timer = setInterval(process(),1000);
-}
-//------------------------------------------------------------------------------
 function switchbotWHAccessory(log, config) {
   this.log          = log;
   this.name         = config['name'];
