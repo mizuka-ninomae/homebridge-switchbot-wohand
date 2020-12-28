@@ -1,5 +1,5 @@
 let Service, Characteristic;
-let exec       = require('child_process').exec;
+const execa      = require('execa');
 
 module.exports = function(homebridge) {
   Service        = homebridge.hap.Service;
@@ -14,12 +14,14 @@ function switchbotWHAccessory(log, config) {
   this.BleMac       = config['BleMac'];
   this.onCmd        = config['on'];
   this.offCmd       = config['off'];
-  this.set_timeout  = config['set_timeout'] || 10000;
-  this.get_timeout  = config['get_timeout'] || 50000;
+  this.button_off   = config['button_off'] || 8000;
+  this.dummy_log    = config['dummy_log'] || false;
+  this.retry        = config['retry'] || 5;
   this.onCommand    = 'gatttool -t random -b ' + this.BleMac + ' --char-write-req -a 0x0016 -n ' + this.onCmd;
   this.offCommand   = 'gatttool -t random -b ' + this.BleMac + ' --char-write-req -a 0x0016 -n ' + this.offCmd;
   this.stateCommand = 'gatttool -t random -b ' + this.BleMac + ' --char-read -a 0x0016';
-  this.onValue      = 'Characteristicvalue/descriptor:' + this.onCmd;
+  this.onValue      = 'Characteristic value/descriptor: ' + this.onCmd + ' ';
+  this.onValue      = this.onValue.toLowerCase().replace(/\s+/g, "");
   if (this.onCmd === this.offCmd) {
     this.type = 'button';
   }
@@ -30,9 +32,9 @@ function switchbotWHAccessory(log, config) {
   this.switchService      = new Service.Switch(this.name);
 
   this.informationService
-  .setCharacteristic(Characteristic.Manufacturer, 'script3 Manufacturer')
-  .setCharacteristic(Characteristic.Model, 'script3 Model')
-  .setCharacteristic(Characteristic.SerialNumber, 'script3 Serial Number');
+  .setCharacteristic(Characteristic.Manufacturer, 'switchbot-wohand Manufacturer')
+  .setCharacteristic(Characteristic.Model, 'switchbot-wohand Model')
+  .setCharacteristic(Characteristic.SerialNumber, 'switchbot-wohand Serial Number');
 
   this.switchService
   .getCharacteristic(Characteristic.On)
@@ -41,6 +43,10 @@ function switchbotWHAccessory(log, config) {
   this.switchService
   .getCharacteristic(Characteristic.On)
   .on('get', this.getState.bind(this));
+
+  if (this.type == 'button') {
+    this.switchService.setCharacteristic(Characteristic.On, false);
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -50,36 +56,65 @@ switchbotWHAccessory.prototype.getServices = function() {
 
 //------------------------------------------------------------------------------
 switchbotWHAccessory.prototype.setState = function(powerOn, callback) {
-  if      (this.type == 'button') {
-    this.log('SET1： ' + powerOn);
-    exec(powerOn ? this.onCommand : this.offCommand, function (error, stdout, stderr) {
-      if (stdout) {console.log(stdout); }
-      callback(error, stdout, stderr)
-    });
+  if      (this.type == 'button' && powerOn) {
+    for (let j=1; j<=this.retry; j++) {
+      try {
+        let SState = execa.commandSync(this.onCommand);
+        this.log('SET Button： ' + powerOn);
+        callback(null);
+        return;
+      }
+      catch {
+        setTimeout(function(){}, 50000);
+        this.log('SET Button Retry: ' + j);
+        continue;
+      }
+    }
   }
 
-//  else if (this.type == 'button' && !powerOn) {
-//    setTimeout(function() {
-//      this.switchService.setCharacteristic(Characteristic.On, false);
-//    }.bind(this), 3000);
-//    this.log('SET2： ' + powerOn);
-//  }
+  else if (this.type == 'button' && !powerOn) {
+    setTimeout(function() {
+      this.switchService.setCharacteristic(Characteristic.On, false);
+    }.bind(this), this.button_off);
+    if (this.dummy_log) {this.log('SET Button(Dummy)： ' + powerOn); }
+    callback(null);
+    return;
+  }
+
 
   else if (this.type == 'switch') {
-    this.log('SET1： ' + powerOn);
-    exec(powerOn ? this.onCommand : this.offCommand, function (error, stdout, stderr) {
-      if (stdout) {console.log(stdout); }
-      callback(error, stdout, stderr)
-    });
+    for (let j=1; j<=this.retry; j++) {
+      try {
+        let SState = execa.commandSync(powerOn ? this.onCommand : this.offCommand);
+        this.log('SET Switch： ' + powerOn);
+        callback(null);
+        return;
+      }
+      catch {
+        setTimeout(function(){}, 50000);
+        this.log('SET Switch Retry: ' + j);
+        continue;
+      }
+    }
   }
 }
 //------------------------------------------------------------------------------
 switchbotWHAccessory.prototype.getState = function(callback) {
-  var it = this;
-  exec(it.stateCommand, {timeout: this.get_timeout}, function (error, stdout, stderr) {
-    if (stderr) { return; }
-    var cleanOut=stdout.toLowerCase().replace(/\s+/g, "");
-    console.log('State of ' + it.name + ' is: ' + stdout);
-    callback(null, cleanOut == it.onValue);
-  });
+  for (let i=1; i<=this.retry; i++) {
+    try {
+      let GState = execa.commandSync(this.stateCommand);
+      let cleanOut = GState.stdout.toLowerCase().replace(/\s+/g, "");
+      this.log('StdOut: ' + GState.stdout);
+      if (this.type == 'switch' && cleanOut == this.onValue) {
+        this.switchService.setCharacteristic(Characteristic.On, true);
+      }
+      callback(null);
+      return;
+      }
+    catch {
+      setTimeout(function(){}, 100000);
+      this.log('GET Retry: ' + i);
+      continue;
+    }
+  }
 }
