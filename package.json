@@ -14,7 +14,4 @@
   },
   "dependencies": {
     "execa": "^5.0.0"
-  }
-    "scripts": {
-  },
 }
