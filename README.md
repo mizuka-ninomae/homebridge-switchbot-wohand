@@ -33,4 +33,4 @@ button modeになるとswitchを定期的にoffにしようとする見えない
 （I don't know what will happen other than these three combinations.）
 * `button_off` button modeの見えない力がswitchをoffにしようとする間隔、デフォルトは8000ミリ秒。
 * `dummy_log` button modeの見えない力を可視化します、デフォルトは見えない（false）。
-* `this.retry` GET／SETに失敗した時にリトライする回数、デフォルトは５回。（The number of retries when GET / SET fails, the default is 5 times.）
+* `retry` GET／SETに失敗した時にリトライする回数、デフォルトは５回。（The number of retries when GET / SET fails, the default is 5 times.）
