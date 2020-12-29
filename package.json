@@ -15,13 +15,10 @@
     "dependencies": {
         "execa": "^5.0.0"
     },
-    "devDependencies": {
-        "eslint": "^7.16.0"
-    },
     "description": "",
     "main": "index.js",
     "scripts": {
-        "lint": "eslint *.js"
+        "lint": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
         "type": "git",
