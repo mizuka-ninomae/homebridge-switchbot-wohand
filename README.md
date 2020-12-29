@@ -25,4 +25,4 @@ Note:
 * `accessory` 固定値（Fixed value）
 * `name` お好みに（To your liking）
 * `BleMac` 公式appのBLU MACの値を入力（Enter the BLU MAC value of the official app）
-* `on`、* `off` on:570101／off:570102、もしくはon:570104(UP)／off:570103(DOWN)
+* `on`、`off` on:570101／off:570102、もしくはon:570104(UP)／off:570103(DOWN)
