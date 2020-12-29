@@ -14,5 +14,22 @@
   },
   "dependencies": {
     "execa": "^5.0.0"
-  }
+  },
+	"devDependencies": {
+    "eslint": "^7.16.0"
+  },
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint *.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mizuka-ninomae/homebridge-switchbot-wohand.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mizuka-ninomae/homebridge-switchbot-wohand/issues"
+  },
+  "homepage": "https://github.com/mizuka-ninomae/homebridge-switchbot-wohand#readme"
 }
