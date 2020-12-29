@@ -60,7 +60,7 @@ switchbotWHAccessory.prototype.setState = function(powerOn, callback) {
     for (let j=1; j<=this.retry; j++) {
       try {
         let SState = execa.commandSync(this.onCommand);
-        this.log(' <<< [SET Button： ' + powerOn + ' ]');
+        this.log(' <<<< [SET Button： ' + powerOn + ']');
         callback(null);
         return;
       }
@@ -76,7 +76,7 @@ switchbotWHAccessory.prototype.setState = function(powerOn, callback) {
     setTimeout(function() {
       this.switchService.setCharacteristic(Characteristic.On, false);
     }.bind(this), this.button_off);
-    if (this.dummy_log) {this.log('SET Button(Dummy)： ' + powerOn); }
+    if (this.dummy_log) {this.log(' <<<< [SET Button(Dummy)： ' + powerOn + ']'); }
     callback(null);
     return;
   }
@@ -86,7 +86,7 @@ switchbotWHAccessory.prototype.setState = function(powerOn, callback) {
     for (let j=1; j<=this.retry; j++) {
       try {
         let SState = execa.commandSync(powerOn ? this.onCommand : this.offCommand);
-        this.log(' <<< [SET Switch： ' + powerOn + ' ]');
+        this.log(' <<<< [SET Switch： ' + powerOn + ']');
         callback(null);
         return;
       }
@@ -104,7 +104,7 @@ switchbotWHAccessory.prototype.getState = function(callback) {
     try {
       let GState = execa.commandSync(this.stateCommand);
       let cleanOut = GState.stdout.toLowerCase().replace(/\s+/g, "");
-      this.log(' >>> [Status GET]');
+      this.log(' >>>> [Status GET]');
       callback(null, (this.type == 'button') ? false : cleanOut == this.onValue);
       return;
       }
