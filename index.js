@@ -108,7 +108,7 @@ switchbotWHAccessory.prototype.getState = function(callback) {
       if (this.type == 'switch' && cleanOut == this.onValue) {
         this.switchService.setCharacteristic(Characteristic.On, true);
       }
-      callback(null);
+      callback(null, cleanOut == it.onValue);
       return;
       }
     catch {
