@@ -14,9 +14,19 @@ function switchbotWHAccessory(log, config) {
   this.BleMac       = config['BleMac'];
   this.onCmd        = config['on'];
   this.offCmd       = config['off'];
+  if ((this.onCmd == 570101 && this.offCmd == 570102) ||
+      (this.onCmd == 570104 && this.offCmd == 570103) ||
+      (this.onCmd == 570100 && this.offCmd == 570100)) {
+  }
+  else {
+    this.onCmd      = 570101;
+    this.offCmd     = 570102;
+  }
   this.button_off   = config['button_off'] || 8000;
+  if (this.button_off < 5000) { this.button_off = 5000; }
   this.dummy_log    = config['dummy_log'] || false;
   this.retry        = config['retry'] || 5;
+  if (this.retry < 1) { this.retry = 1; }
   this.onCommand    = 'gatttool -t random -b ' + this.BleMac + ' --char-write-req -a 0x0016 -n ' + this.onCmd;
   this.offCommand   = 'gatttool -t random -b ' + this.BleMac + ' --char-write-req -a 0x0016 -n ' + this.offCmd;
   this.stateCommand = 'gatttool -t random -b ' + this.BleMac + ' --char-read -a 0x0016';

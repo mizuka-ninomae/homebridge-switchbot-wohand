@@ -1,36 +1,37 @@
 {
-    "name": "homebridge-switchbot-wohand",
-    "version": "0.1.4",
-    "keywords": [
-        "homebridge-plugin",
-        "homebridge-switchbot-wohand",
-        "homebridge-switchbot",
-        "switchbot",
-        "bot",
-        "switch",
-        "button",
-        "wohand"
-    ],
-    "engines": {
-        "homebridge": ">=0.2.0",
-        "node": ">=6.0.0"
-    },
-    "dependencies": {
-        "execa": "^5.0.0"
-    },
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "lint": "echo \"Warning: lint is not used\" && exit 0",
-        "build": "echo \"Warning: build is not used\" && exit 0"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/mizuka-ninomae/homebridge-switchbot-wohand.git"
-    },
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/mizuka-ninomae/homebridge-switchbot-wohand/issues"
-    },
-    "homepage": "https://github.com/mizuka-ninomae/homebridge-switchbot-wohand#readme"
+  "name": "homebridge-switchbot-wohand",
+  "version": "0.1.5",
+  "keywords": [
+    "homebridge-plugin",
+    "homebridge-switchbot-wohand",
+    "homebridge-switchbot",
+    "switchbot",
+    "bot",
+    "switch",
+    "button",
+    "wohand"
+  ],
+  "engines": {
+    "homebridge": ">=0.2.0",
+    "node": ">=6.0.0"
+  },
+  "dependencies": {
+    "execa": "^5.0.0"
+  },
+  "description": "これ何？（What is this?）",
+  "main": "index.js",
+  "scripts": {
+    "lint": "echo \"Warning: lint is not used\" && exit 0",
+    "build": "echo \"Warning: build is not used\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mizuka-ninomae/homebridge-switchbot-wohand.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mizuka-ninomae/homebridge-switchbot-wohand/issues"
+  },
+  "homepage": "https://github.com/mizuka-ninomae/homebridge-switchbot-wohand#readme",
+  "author": "mizuka-ninomae"
 }
