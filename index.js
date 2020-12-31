@@ -12,8 +12,8 @@ function switchbotWHAccessory(log, config) {
   this.log          = log;
   this.name         = config['name'];
   this.BleMac       = config['BleMac'];
-  this.onCmd        = config['on'];
-  this.offCmd       = config['off'];
+  this.onCmd        = config['on'] || 570101;
+  this.offCmd       = config['off'] || 570102;
   if ((this.onCmd == 570101 && this.offCmd == 570102) ||
       (this.onCmd == 570104 && this.offCmd == 570103) ||
       (this.onCmd == 570100 && this.offCmd == 570100)) {
