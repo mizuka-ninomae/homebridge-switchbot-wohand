@@ -31,6 +31,7 @@ button modeになるとswitchを定期的にoffにしようとする見えない
 この３つの組み合わせ以外は何が起こるか分かりません。
 （I don't know what will happen other than these three combinations.）
 省略すると`on`：570101／`off`：570102になります。
+（If omitted, it will be on: 570101 / off: 570102.）
 * `dummy_log` → button modeの見えない力を可視化します。[Default: false]
 * `button_off` → button modeの見えない力がswitchをoffにしようとする間隔。[Default: 8000ミリ秒]
 * `retry` → GET／SETに失敗した時にリトライする回数。（The number of retries when GET / SET fails.）[Default: 5]
