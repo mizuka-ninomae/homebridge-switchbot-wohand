@@ -1,6 +1,6 @@
 {
   "name": "homebridge-switchbot-wohand",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "keywords": [
     "homebridge-plugin",
     "homebridge-switchbot-wohand",
@@ -16,7 +16,8 @@
     "node": ">=6.0.0"
   },
   "dependencies": {
-    "execa": "^5.0.0"
+    "execa": "^5.0.0",
+    "node-cron": "^2.0.3"
   },
   "description": "これ何？（What is this?）",
   "main": "index.js",
